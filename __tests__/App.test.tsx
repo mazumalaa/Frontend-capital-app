@@ -1,0 +1,23 @@
+/**
+ * @format
+ */
+
+import 'react-native';
+import React from 'react';
+import {expect, it, jest} from '@jest/globals';
+jest.mock('../src/routes/routes', () => {
+  const ReactForMock = require('react');
+  return function MockRootStack() {
+    return ReactForMock.createElement('RootStack');
+  };
+});
+import App from '../App';
+
+// Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
+
+it('renders correctly', () => {
+  const tree = renderer.create(<App />);
+  expect(tree.toJSON()).toMatchObject({type: 'RootStack'});
+  tree.unmount();
+});
